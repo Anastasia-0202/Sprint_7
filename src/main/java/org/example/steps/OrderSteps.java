@@ -8,6 +8,7 @@ import org.example.constants.ApiEndpoint;
 import org.example.pojo.OrderCreateRequest;
 
 import static io.restassured.RestAssured.given;
+import static org.apache.http.HttpStatus.SC_OK;
 import static org.example.constants.ApiEndpoint.ORDER_POST_CREATE;
 
 public class OrderSteps {
@@ -24,5 +25,13 @@ public class OrderSteps {
                 .body(orderCreateRequest)
                 .post(ORDER_POST_CREATE)
                 .then();
+    }
+    public void cancelOrder(Integer trackId) {
+        given()
+                .pathParam("track", trackId)
+                .when()
+                .put("/api/v1/orders/cancel?track={track}")
+                .then()
+                .statusCode(SC_OK); // или другой подходящий статус
     }
 }
